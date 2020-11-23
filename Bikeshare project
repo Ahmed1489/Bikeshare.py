@@ -1,0 +1,563 @@
+import numpy  as np
+import pandas as pd
+import time
+
+chicago_data = pd.read_csv('chicago.csv')
+
+new_york_city_data = pd.read_csv('new_york_city.csv')
+
+washington_data = pd.read_csv('washington.csv')
+
+CITIES = ['chicago', 'new york', 'washington']
+
+MONTHS = ['january', 'february', 'march', 'april', 'may', 'june','july','agust','september','october','november','december']
+
+DAYS = ['sunday', 'monday', 'tuesday', 'wednesday','thursday', 'friday', 'saturday' ]
+
+def get_filters():
+    """
+    Asks user to specify a city, month, and day to analyze.
+
+    Returns:
+        (str) city - name of the city to analyze
+        (str) month - name of the month to filter by, or "all" to apply no month filter
+        (str) day - name of the day of week to filter by, or "all" to apply no day filter
+    """
+    print('Hello! Let\'s explore some US bikeshare data!')
+    
+    
+    
+    # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
+while True:
+    city = input('Which city do you want to explore Chicago, New York or Washington? \n').lower()
+    if city in CITIES:
+           break
+
+    # get user input for month (all, january, february, ... , june)
+month = get_user_input('All right! now it\'s time to provide us a month name '\
+                    'or just say \'all\' to apply no month filter. \n(e.g. all, january, february, march, april, may, june) \n> ', MONTHS)
+
+    # get user input for day of week (all, monday, tuesday, ... sunday)
+day = get_user_input('One last thing. Could you type one of the week day you want to analyze?'\
+                   ' You can type \'all\' again to apply no day filter. \n(e.g. all, monday, sunday) \n> ', DAYS)
+
+print('-'*40)
+return city, month, day
+
+
+
+def load_data(city, month, day):
+    """
+    Loads data for the specified city and filters by month and day if applicable.
+
+    Args:
+        (str) city - name of the city to analyze
+        (str) month - name of the month to filter by, or "all" to apply no month filter
+        (str) day - name of the day of week to filter by, or "all" to apply no day filter
+    Returns:
+        df - Pandas DataFrame containing city data filtered by month and day
+    """
+    
+    
+ df = pd.read_csv(CITY_DATA[city])
+
+    # convert the Start Time column to datetime
+df['Start Time'] = pd.to_datetime(df['Start Time'])
+
+    # extract month and day of week and hour from Start Time to create new columns
+df['month'] = df['Start Time'].dt.month
+df['day_of_week'] = df['Start Time'].dt.weekday_name
+df['hour'] = df['Start Time'].dt.hour
+
+    # filter by month if applicable
+if month != 'all':
+month =  MONTHS.index(month) + 1
+df = df[ df['month'] == month ]
+
+    # filter by day of week if applicable
+if day != 'all':
+        # filter by day of week to create the new dataframe
+df = df[ df['day_of_week'] == day.title()]
+
+return df
+
+
+# display the most common month
+
+filename = 'chicago.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# convert the Start Time column to datetime
+df['Start Time'] = pd.to_datetime(df['Start Time'])
+
+# extract month from the Start Time column to create a month column
+df['month'] = df['Start Time'].dt.month
+
+# find the most common month
+common_month = df['month'].mode()[0]
+
+print('Most common month:', common_month)
+
+
+filename = 'new_york_city.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# convert the Start Time column to datetime
+df['Start Time'] = pd.to_datetime(df['Start Time'])
+
+# extract month from the Start Time column to create a month column
+df['month'] = df['Start Time'].dt.month
+
+# find the most common month
+common_month = df['month'].mode()[0]
+
+print('Most common month:', common_month)
+
+
+filename = 'washington.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# convert the Start Time column to datetime
+df['Start Time'] = pd.to_datetime(df['Start Time'])
+
+# extract month from the Start Time column to create a month column
+df['month'] = df['Start Time'].dt.month
+
+# find the most common month
+common_month = df['month'].mode()[0]
+
+print('Most common month:', common_month)
+
+# display the most common day of week
+
+filename = 'chicago.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# convert the Start Time column to datetime
+df['Start Time'] = pd.to_datetime(df['Start Time'])
+
+# extract day from the Start Time column to create a day column
+df['day'] = df['Start Time'].dt.day
+
+# find the most common day of week
+common_day = df['day'].mode()[0]
+
+print('Most common day of week:', common_day)
+
+filename = 'new_york_city.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# convert the Start Time column to datetime
+df['Start Time'] = pd.to_datetime(df['Start Time'])
+
+# extract day from the Start Time column to create a day column
+df['day'] = df['Start Time'].dt.day
+
+# find the most common day of week
+common_day = df['day'].mode()[0]
+
+print('Most common day of week:', common_day)
+
+filename = 'washington.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# convert the Start Time column to datetime
+df['Start Time'] = pd.to_datetime(df['Start Time'])
+
+# extract day from the Start Time column to create a day column
+df['day'] = df['Start Time'].dt.day
+
+# find the most common day of week
+common_day = df['day'].mode()[0]
+
+print('Most common day of week:', common_day)
+
+
+#display the most common hour of the day
+
+filename = 'chicago.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# convert the Start Time column to datetime
+df['Start Time'] = pd.to_datetime(df['Start Time'])
+
+# extract hour from the Start Time column to create an hour column
+df['hour'] = df['Start Time'].dt.hour
+
+# find the most common hour of day
+common_hour = df['hour'].mode()[0]
+
+print('Most common hour of day:', common_hour)
+
+
+filename = 'new_york_city.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# convert the Start Time column to datetime
+df['Start Time'] = pd.to_datetime(df['Start Time'])
+
+# extract hour from the Start Time column to create an hour column
+df['hour'] = df['Start Time'].dt.hour
+
+# find the most common hour of day
+common_hour = df['hour'].mode()[0]
+
+print('Most common hour of day:', common_hour)
+
+
+filename = 'washington.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# convert the Start Time column to datetime
+df['Start Time'] = pd.to_datetime(df['Start Time'])
+
+# extract hour from the Start Time column to create an hour column
+df['hour'] = df['Start Time'].dt.hour
+
+# find the most common hour of day
+common_hour = df['hour'].mode()[0]
+
+print('Most common hour of day:', common_hour)
+
+
+#display the most common start staion
+
+filename = 'chicago.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+from collections import Counter 
+
+  
+def most_common_Start_Station(List): 
+    occurence_count = Counter(List) 
+    return occurence_count.most_common(1)[0][0] 
+    
+most_common_Start_Station = df['Start Station'].mode()[0]
+print('most common Start Station:', most_common_Start_Station)
+
+
+
+filename = 'washington.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+from collections import Counter 
+
+  
+def most_common_Start_Station(List): 
+    occurence_count = Counter(List) 
+    return occurence_count.most_common(1)[0][0] 
+    
+most_common_Start_Station = df['Start Station'].mode()[0]
+print('most common Start Station:', most_common_Start_Station)
+
+
+
+filename = 'chicago.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+from collections import Counter 
+
+  
+def most_common_End_Station(List): 
+    occurence_count = Counter(List) 
+    return occurence_count.most_common(1)[0][0] 
+    
+most_common_End_Station = df['End Station'].mode()[0]
+print('most common End Station:', most_common_End_Station)
+
+
+#display the most common end station
+
+filename = 'chicago.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+from collections import Counter 
+
+  
+def most_common_End_Station(List): 
+    occurence_count = Counter(List) 
+    return occurence_count.most_common(1)[0][0] 
+    
+most_common_End_Station = df['End Station'].mode()[0]
+print('most common End Station:', most_common_End_Station)
+
+
+
+filename = 'new_york_city.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+from collections import Counter 
+
+  
+def most_common_End_Station(List): 
+    occurence_count = Counter(List) 
+    return occurence_count.most_common(1)[0][0] 
+    
+most_common_End_Station = df['End Station'].mode()[0]
+print('most common End Station:', most_common_End_Station)
+
+
+filename = 'washington.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+from collections import Counter 
+
+  
+def most_common_End_Station(List): 
+    occurence_count = Counter(List) 
+    return occurence_count.most_common(1)[0][0] 
+    
+most_common_End_Station = df['End Station'].mode()[0]
+print('most common End Station:', most_common_End_Station)
+
+
+
+#display the most common trip
+
+filename = 'chicago.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+from collections import Counter 
+  
+most_common_Start_End_Station = df[['Start Station', 'End Station']].mode().loc[0]
+    
+print("The most commonly used Start Station and End Station : {}, {}"\
+          
+          .format(most_common_Start_End_Station[0], most_common_Start_End_Station[1]))
+          
+          
+          
+ filename = 'new_york_city.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+from collections import Counter 
+  
+most_common_Start_End_Station = df[['Start Station', 'End Station']].mode().loc[0]
+    
+print("The most commonly used Start Station and End Station : {}, {}"\
+          
+          .format(most_common_Start_End_Station[0], most_common_Start_End_Station[1]))         
+         
+
+filename = 'washington.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+from collections import Counter 
+  
+most_common_Start_End_Station = df[['Start Station', 'End Station']].mode().loc[0]
+    
+print("The most commonly used Start Station and End Station : {}, {}"\
+          
+          .format(most_common_Start_End_Station[0], most_common_Start_End_Station[1]))
+          
+          
+   
+#display total travel time
+
+
+filename = 'chicago.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+total_travel = df['Trip Duration'].sum()
+
+print("Total travel time :", total_travel)
+
+
+
+filename = 'new_york_city.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+total_travel = df['Trip Duration'].sum()
+
+print("Total travel time :", total_travel)
+
+
+filename = 'washington.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+total_travel = df['Trip Duration'].sum()
+
+print("Total travel time :", total_travel)
+
+
+
+#display average travel time
+
+
+filename = 'chicago.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+average_travel = df['Trip Duration'].mean()
+
+print("average travel time :", average_travel)
+
+
+filename = 'new_york_city.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+average_travel = df['Trip Duration'].mean()
+
+print("average travel time :", average_travel)
+
+
+filename = 'washington.csv'
+    
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+average_travel = df['Trip Duration'].mean()
+
+print("average travel time :", average_travel)
+
+
+#display user type
+
+filename = 'chicago.csv'
+
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# print value counts for each user type
+user_types = df['User Type'].value_counts()
+
+print(user_types)
+
+
+filename = 'new_york_city.csv'
+
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# print value counts for each user type
+user_types = df['User Type'].value_counts()
+
+print(user_types)
+
+
+filename = 'washington.csv'
+
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# print value counts for each user type
+user_types = df['User Type'].value_counts()
+
+print(user_types)
+
+
+#display user gender
+
+filename = 'chicago.csv'
+
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# print value counts for each gender
+Gender = df['Gender'].value_counts()
+
+print(Gender)
+
+
+filename = 'new_york_city.csv'
+
+# load data file into a dataframe
+df = pd.read_csv(filename)
+
+# print value counts for each gender
+Gender = df['Gender'].value_counts()
+
+print(Gender)
+
+
+
+#display The earliest Birth Year,The most recent Birth Year&The most common Birth Year
+
+
+filename = 'chicago.csv'
+
+# load data file into a dataframe
+df = pd.read_csv(filename) 
+    
+    # Display earliest, most recent, and most common year of birth
+Birth_Year = df['Birth Year']
+
+# the most earliest birth year
+earliest_year = Birth_Year.min()
+print("The earliest Birth Year:", earliest_year)
+
+    # the most recent birth year
+most_recent = Birth_Year.max()
+print("The most recent Birth Year:", most_recent)
+      
+    # the most common birth year 
+most_common_year = Birth_Year.value_counts().idxmax()
+print("The most common Birth Year:", most_common_year)
+
+
+
+filename = 'new_york_city.csv'
+
+# load data file into a dataframe
+df = pd.read_csv(filename) 
+    
+    # Display earliest, most recent, and most common year of birth
+Birth_Year = df['Birth Year']
+
+# the most earliest birth year
+earliest_year = Birth_Year.min()
+print("The earliest Birth Year:", earliest_year)
+
+    # the most recent birth year
+most_recent = Birth_Year.max()
+print("The most recent Birth Year:", most_recent)
+      
+    # the most common birth year 
+most_common_year = Birth_Year.value_counts().idxmax()
+print("The most common Birth Year:", most_common_year)
+         
